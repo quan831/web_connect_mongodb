@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Webform MongoDB Dashboard
 
-## Getting Started
+A full-stack **Next.js App Router** project using **MongoDB + Mongoose** and **shadcn/ui** to build a simple dashboard for managing users (CRUD).
 
-First, run the development server:
+---
+
+## ✨ Features
+
+- ✅ Next.js 16 (App Router)
+- ✅ MongoDB with Mongoose
+- ✅ User CRUD (Create, Read, Update, Delete)
+- ✅ Server Actions & API Routes ready
+- ✅ shadcn/ui + Tailwind CSS
+- ✅ TypeScript + ESLint strict
+
+---
+
+## 📁 Project Structure
+
+```text
+webformongodb/
+├── app/
+│   ├── api/              # API routes (users)
+│   ├── dashboard/        # Dashboard pages
+│   ├── layout.tsx        # Root layout
+│   ├── page.tsx          # Home page
+│   └── globals.css
+├── components/           # shadcn/ui components
+├── lib/                  # DB connection (mongoose)
+├── models/               # Mongoose models
+├── public/
+├── .env.local            # Environment variables (ignored)
+├── components.json       # shadcn config
+├── next.config.ts
+├── tsconfig.json
+└── package.json
+```
+
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env.local` file:
+
+```env
+MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>/<dbname>?retryWrites=true&w=majority
+```
+
+> ⚠️ Never commit `.env.local` to GitHub.
+
+---
+
+## 🚀 Getting Started
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open browser:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Dashboard:
 
-## Learn More
+```text
+http://localhost:3000/dashboard
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 👤 User Management (CRUD)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Dashboard allows:
 
-## Deploy on Vercel
+- ➕ Add user (Name, Email, Phone)
+- ✏️ Edit user
+- 🗑 Delete user
+- 📋 View user list from MongoDB
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+All data is stored in MongoDB using **Mongoose**.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🧠 Tech Stack
+
+- **Next.js** (App Router)
+- **MongoDB**
+- **Mongoose**
+- **TypeScript**
+- **shadcn/ui**
+- **Tailwind CSS**
+
+---
+
+## ✅ Git & Best Practices
+
+- `node_modules`, `.next`, `.env.local` are ignored
+- `next-env.d.ts` is committed (recommended by Next.js)
+- Database connection is cached to avoid multiple connections
+
+---
+
+## 📌 Notes
+
+- This project is suitable for learning **full‑stack Next.js**
+- Can be extended with:
+  - Authentication (NextAuth)
+  - Role-based access
+  - Pagination & search
+
+---
+
+## 📄 License
+
+MIT License
+
