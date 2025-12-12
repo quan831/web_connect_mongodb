@@ -1,5 +1,5 @@
 {
-  "name": "webformongodb",
+  "name": "web_connect_mongodb",
   "version": "0.1.0",
   "private": true,
   "scripts": {
