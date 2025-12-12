@@ -6,7 +6,6 @@ if (!MONGODB_URI) {
     throw new Error("Please define the MONGODB_URI environment variable in .env.local")
 }
 
-// Cache connection cho hot-reload của Next
 let cached = (global as any).mongoose
 
 if (!cached) {

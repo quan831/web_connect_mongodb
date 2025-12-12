@@ -8,14 +8,12 @@ type CreateUserBody = {
     phone?: string
 }
 
-// Lấy list user
 export async function GET() {
     await connectDB()
     const users = await User.find().lean()
     return NextResponse.json(users)
 }
 
-// Tạo user mới
 export async function POST(req: NextRequest) {
     try {
         const body: CreateUserBody = await req.json()

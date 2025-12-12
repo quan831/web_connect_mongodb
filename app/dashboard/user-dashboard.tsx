@@ -29,7 +29,6 @@ export default function UserDashboard() {
     const [editingId, setEditingId] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
 
-    // Lấy danh sách user
     const fetchUsers = async () => {
         const res = await fetch("/api/users")
         const data = await res.json()
@@ -40,7 +39,6 @@ export default function UserDashboard() {
         fetchUsers()
     }, [])
 
-    // Submit form: nếu có editingId thì update, không thì create
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
         setLoading(true)
@@ -92,11 +90,9 @@ export default function UserDashboard() {
         <div className="min-h-screen bg-background">
             <main className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-8">
                 <h1 className="text-2xl font-bold tracking-tight">User Dashboard</h1>
-
-                {/* Form thêm / sửa */}
                 <Card className="max-w-xl">
                     <CardHeader>
-                        <CardTitle>{editingId ? "Update user" : "Add user"}</CardTitle>
+                        <CardTitle>{editingId ? "Update User" : "Add User"}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <form className="space-y-4" onSubmit={handleSubmit}>
@@ -149,7 +145,6 @@ export default function UserDashboard() {
                     </CardContent>
                 </Card>
 
-                {/* Bảng user */}
                 <Card>
                     <CardHeader>
                         <CardTitle>User List</CardTitle>
