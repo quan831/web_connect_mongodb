@@ -9,31 +9,48 @@ A full-stack **Next.js App Router** project using **MongoDB + Mongoose** and **s
 - ✅ Next.js 16 (App Router)
 - ✅ MongoDB with Mongoose
 - ✅ User CRUD (Create, Read, Update, Delete)
+- ✅ User Authentication (Login, Register)
 - ✅ Server Actions & API Routes ready
 - ✅ shadcn/ui + Tailwind CSS
 - ✅ TypeScript + ESLint strict
+- ✅ JWT Authentication Middleware
 
 ---
 
 ## 📁 Project Structure
 
 ```text
-webformongodb/
+web_connect_mongodb/
 ├── app/
 │   ├── api/              # API routes (users)
+│   │   ├── auth/         # Authentication routes (login, logout, register)
+│   │   └── users/        # User CRUD routes
 │   ├── dashboard/        # Dashboard pages
+│   │   ├── page.tsx      # Dashboard entry page
+│   │   └── user-dashboard.tsx # User dashboard component
+│   ├── login/            # Login pages
+│   ├── register/         # Register pages
 │   ├── layout.tsx        # Root layout
 │   ├── page.tsx          # Home page
-│   └── globals.css
+│   └── globals.css       # Global styles
 ├── components/           # shadcn/ui components
-├── lib/                  # DB connection (mongoose)
+│   ├── logout-button.tsx # Logout button component
+│   └── ui/               # UI components (button, card, input, etc.)
+├── lib/                  # Utility libraries
+│   ├── auth.ts           # Authentication helpers
+│   ├── jwt.ts            # JWT utilities
+│   ├── mongoose.ts       # MongoDB connection
+│   └── utils.ts          # General utilities
+├── middleware.ts         # Middleware for authentication
 ├── models/               # Mongoose models
-├── public/
+│   ├── Login.ts          # Login model
+│   └── User.ts           # User model
+├── public/               # Static assets
 ├── .env.local            # Environment variables (ignored)
 ├── components.json       # shadcn config
-├── next.config.ts
-├── tsconfig.json
-└── package.json
+├── next.config.ts        # Next.js configuration
+├── tsconfig.json         # TypeScript configuration
+└── package.json          # Project metadata
 ```
 
 ---
@@ -44,6 +61,7 @@ Create a `.env.local` file:
 
 ```env
 MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>/<dbname>?retryWrites=true&w=majority
+JWT_SECRET=<your_jwt_secret>
 ```
 
 > ⚠️ Never commit `.env.local` to GitHub.
@@ -123,4 +141,3 @@ All data is stored in MongoDB using **Mongoose**.
 ## 📄 License
 
 MIT License
-
