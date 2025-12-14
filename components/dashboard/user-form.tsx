@@ -13,6 +13,16 @@ import {
     TableCell,
 } from "@/components/ui/table"
 import { Label } from "@/components/ui/label"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 type User = {
     _id: string
@@ -28,6 +38,7 @@ export default function UserForm() {
     const [form, setForm] = useState(emptyForm)
     const [editingId, setEditingId] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
+    const [deleteId, setDeleteId] = useState<string | null>(null)
 
     const fetchUsers = async () => {
         const res = await fetch("/api/users")
@@ -78,8 +89,7 @@ export default function UserForm() {
     }
 
     const handleDelete = async (id: string) => {
-        if (!confirm("Delete this user?")) return
-
+        // Confirmation is now handled by AlertDialog
         try {
             const res = await fetch(`/api/users/${id}`, {
                 method: "DELETE",
@@ -187,7 +197,7 @@ export default function UserForm() {
                                             <Button
                                                 size="sm"
                                                 variant="destructive"
-                                                onClick={() => handleDelete(user._id)}
+                                                onClick={() => setDeleteId(user._id)}
                                             >
                                                 Delete
                                             </Button>
@@ -205,6 +215,32 @@ export default function UserForm() {
                         </Table>
                     </CardContent>
                 </Card>
+
+                <AlertDialog open={!!deleteId} onOpenChange={(open) => !open && setDeleteId(null)}>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete the user
+                                and remove their data from our servers.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                                className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+                                onClick={() => {
+                                    if (deleteId) {
+                                        handleDelete(deleteId)
+                                        setDeleteId(null)
+                                    }
+                                }}
+                            >
+                                Delete
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             </div>
         </div>
     )

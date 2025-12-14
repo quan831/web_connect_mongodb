@@ -43,7 +43,7 @@ export default function RegisterForm() {
                 <CardHeader>
                     <div className="flex justify-between items-center">
                         <CardTitle>Register</CardTitle>
-                        <Link href="/public">
+                        <Link href="/">
                             <Button variant="outline" size="sm">Back to Home page</Button>
                         </Link>
                     </div>
