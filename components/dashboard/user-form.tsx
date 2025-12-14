@@ -23,7 +23,7 @@ type User = {
 
 const emptyForm = { name: "", email: "", phone: "" }
 
-export default function UserDashboard() {
+export default function UserForm() {
     const [users, setUsers] = useState<User[]>([])
     const [form, setForm] = useState(emptyForm)
     const [editingId, setEditingId] = useState<string | null>(null)
@@ -80,17 +80,28 @@ export default function UserDashboard() {
     const handleDelete = async (id: string) => {
         if (!confirm("Delete this user?")) return
 
-        await fetch(`/api/users/${id}`, {
-            method: "DELETE",
-        })
-        await fetchUsers()
+        try {
+            const res = await fetch(`/api/users/${id}`, {
+                method: "DELETE",
+            })
+
+            if (!res.ok) {
+                const data = await res.json()
+                alert(`Failed to delete: ${data.message || res.statusText}`)
+                return
+            }
+
+            await fetchUsers()
+        } catch (error) {
+            console.error(error)
+            alert("An error occurred while deleting")
+        }
     }
 
     return (
         <div className="min-h-screen bg-background">
-            <main className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-8">
-                <h1 className="text-2xl font-bold tracking-tight">User Dashboard</h1>
-                <Card className="max-w-xl">
+            <div className="space-y-6">
+                <Card>
                     <CardHeader>
                         <CardTitle>{editingId ? "Update User" : "Add User"}</CardTitle>
                     </CardHeader>
@@ -194,7 +205,7 @@ export default function UserDashboard() {
                         </Table>
                     </CardContent>
                 </Card>
-            </main>
+            </div>
         </div>
     )
 }

@@ -16,7 +16,9 @@ export async function POST(req: Request) {
             );
         }
 
-        const user = await Login.findOne({ username });
+        const user = await Login.findOne({
+            $or: [{ username }, { email: username }]
+        });
         if (!user) {
             return NextResponse.json(
                 { error: "Invalid credentials" },
@@ -32,7 +34,7 @@ export async function POST(req: Request) {
             );
         }
 
-        const token = await signJWT({ userId: user._id, username: user.username });
+        const token = await signJWT({ userId: user._id.toString(), username: user.username });
 
         const cookieStore = await cookies();
         cookieStore.set("auth_token", token, {

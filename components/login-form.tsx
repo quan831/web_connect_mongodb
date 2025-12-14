@@ -43,7 +43,7 @@ export default function LoginPage() {
                 <CardHeader>
                     <div className="flex justify-between items-center">
                         <CardTitle>Login</CardTitle>
-                        <Link href="/">
+                        <Link href="/public">
                             <Button variant="outline" size="sm">Back to Home page</Button>
                         </Link>
                     </div>
@@ -52,11 +52,11 @@ export default function LoginPage() {
                 <form onSubmit={handleSubmit}>
                     <CardContent className="space-y-4">
                         <div className="space-y-2">
-                            <Label htmlFor="username">Username</Label>
+                            <Label htmlFor="username">Username or Email</Label>
                             <Input
                                 id="username"
                                 type="text"
-                                placeholder="Enter your username"
+                                placeholder="Enter your username or email"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 required

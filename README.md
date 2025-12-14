@@ -1,19 +1,23 @@
-# Webform MongoDB Dashboard
+# Web Connect MongoDB Dashboard
 
-A full-stack **Next.js App Router** project using **MongoDB + Mongoose** and **shadcn/ui** to build a simple dashboard for managing users (CRUD).
+A full-stack **Next.js App Router** project using **MongoDB + Mongoose** and **shadcn/ui** to build a comprehensive dashboard for managing users and authenticated sessions.
 
 ---
 
 ## ✨ Features
 
-- ✅ Next.js 16 (App Router)
-- ✅ MongoDB with Mongoose
-- ✅ User CRUD (Create, Read, Update, Delete)
-- ✅ User Authentication (Login, Register)
-- ✅ Server Actions & API Routes ready
-- ✅ shadcn/ui + Tailwind CSS
-- ✅ TypeScript + ESLint strict
-- ✅ JWT Authentication Middleware
+- **✅ Next.js 16 (App Router)**: Modern server-side rendering and routing.
+- **✅ MongoDB with Mongoose**: Robust data modeling and database interaction.
+- **✅ Secure Authentication**:
+  - JWT-based session management (HttpOnly cookies).
+  - Login with **Username** or **Email**.
+  - Secure Registration with password hashing (bcryptjs).
+  - Protected Routes via Middleware.
+- **✅ Dashboard Management**:
+  - **User Management**: CRUD operations (Create, Read, Update, Delete) for users.
+  - **Account Management**: Update your own Profile (Email, Password) securely.
+- **✅ Modern UI/UX**: Built with **shadcn/ui** components and **Tailwind CSS**.
+- **✅ Type-Safety**: 100% TypeScript.
 
 ---
 
@@ -22,119 +26,101 @@ A full-stack **Next.js App Router** project using **MongoDB + Mongoose** and **s
 ```text
 web_connect_mongodb/
 ├── app/
-│   ├── api/              # API routes (users)
-│   │   ├── auth/         # Authentication routes (login, logout, register)
-│   │   └── users/        # User CRUD routes
-│   ├── dashboard/        # Dashboard pages
-│   │   ├── page.tsx      # Dashboard entry page
-│   │   └── user-dashboard.tsx # User dashboard component
-│   ├── login/            # Login pages
-│   ├── register/         # Register pages
-│   ├── layout.tsx        # Root layout
-│   ├── page.tsx          # Home page
-│   └── globals.css       # Global styles
-├── components/           # shadcn/ui components
-│   ├── logout-button.tsx # Logout button component
-│   └── ui/               # UI components (button, card, input, etc.)
-├── lib/                  # Utility libraries
-│   ├── auth.ts           # Authentication helpers
-│   ├── jwt.ts            # JWT utilities
-│   ├── mongoose.ts       # MongoDB connection
-│   └── utils.ts          # General utilities
-├── middleware.ts         # Middleware for authentication
-├── models/               # Mongoose models
-│   ├── Login.ts          # Login model
-│   └── User.ts           # User model
-├── public/               # Static assets
-├── .env.local            # Environment variables (ignored)
-├── components.json       # shadcn config
-├── next.config.ts        # Next.js configuration
-├── tsconfig.json         # TypeScript configuration
-└── package.json          # Project metadata
+│   ├── api/                  # API routes
+│   │   ├── auth/             # Auth routes (login, logout, register, update-account)
+│   │   └── users/            # User CRUD routes
+│   ├── dashboard/            # Protected Dashboard
+│   │   ├── user/             # User Management Page
+│   │   ├── account/          # Account Settings Page
+│   │   └── page.tsx          # Redirects to /dashboard/user
+│   ├── login/                # Login Page
+│   ├── register/             # Registration Page
+│   ├── layout.tsx            # Root layout
+│   └── page.tsx              # Landing page
+├── components/               # UI Components
+│   ├── dashboard/            # Dashboard specific components
+│   │   ├── sidebar.tsx       # Navigation Sidebar
+│   │   ├── user-form.tsx     # User CRUD Form & List
+│   │   └── account-form.tsx  # Profile Update Form
+│   ├── ui/                   # Reusable shadcn/ui components
+│   ├── logout-button.tsx     # Logout logic
+│   ├── login-form.tsx        # Login Form
+│   └── register-form.tsx     # Registration Form
+├── lib/                      # Utilities
+│   ├── auth.ts               # Password hashing helpers
+│   ├── jwt.ts                # JWT signing/verify
+│   └── mongoose.ts           # DB Connection
+├── models/                   # Mongoose Models
+│   ├── Login.ts              # Auth Accounts
+│   └── User.ts               # Dashboard Users
+└── middleware.ts             # Auth protection middleware
 ```
 
 ---
 
 ## ⚙️ Environment Variables
 
-Create a `.env.local` file:
+Create a `.env.local` file in the root directory:
 
 ```env
 MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>/<dbname>?retryWrites=true&w=majority
-JWT_SECRET=<your_jwt_secret>
+JWT_SECRET_KEY=<your_secure_random_string>
 ```
 
-> ⚠️ Never commit `.env.local` to GitHub.
+> ⚠️ **Security Note:** Never commit `.env.local` to version control.
 
 ---
 
 ## 🚀 Getting Started
 
-Install dependencies:
+1. **Install dependencies:**
 
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
-Run development server:
+2. **Run development server:**
 
-```bash
-npm run dev
-```
+   ```bash
+   npm run dev
+   ```
 
-Open browser:
+3. **Access the application:**
 
-```text
-http://localhost:3000
-```
-
-Dashboard:
-
-```text
-http://localhost:3000/dashboard
-```
+   - **Home:** `http://localhost:3000`
+   - **Login:** `http://localhost:3000/login`
+   - **Dashboard:** `http://localhost:3000/dashboard` (Redirects to User Management)
 
 ---
 
-## 👤 User Management (CRUD)
+## 🛠️ Functionality Details
 
-Dashboard allows:
+### Authentication
+- Users can register a new account.
+- Login accepts either **Username** or **Email**.
+- Sessions are maintained via secure HTTP-only cookies.
 
-- ➕ Add user (Name, Email, Phone)
-- ✏️ Edit user
-- 🗑 Delete user
-- 📋 View user list from MongoDB
+### User Management (Dashboard)
+- View a list of users stored in the `users` collection.
+- Add new users with Name, Email, and Phone.
+- Update or Delete existing users.
 
-All data is stored in MongoDB using **Mongoose**.
+### Account Settings
+- Navigate to **Account Management** to update your profile.
+- Change your **Email Address** (verified with password).
+- Change your **Password** (verified with current password).
 
 ---
 
 ## 🧠 Tech Stack
 
-- **Next.js** (App Router)
-- **MongoDB**
-- **Mongoose**
-- **TypeScript**
-- **shadcn/ui**
-- **Tailwind CSS**
-
----
-
-## ✅ Git & Best Practices
-
-- `node_modules`, `.next`, `.env.local` are ignored
-- `next-env.d.ts` is committed (recommended by Next.js)
-- Database connection is cached to avoid multiple connections
-
----
-
-## 📌 Notes
-
-- This project is suitable for learning **full‑stack Next.js**
-- Can be extended with:
-  - Authentication (NextAuth)
-  - Role-based access
-  - Pagination & search
+- **Framework:** Next.js (App Router)
+- **Database:** MongoDB
+- **ORM:** Mongoose
+- **Styling:** Tailwind CSS
+- **Components:** shadcn/ui
+- **Icons:** Lucide React
+- **Validation:** Zod (recommended for future expansion)
 
 ---
 
