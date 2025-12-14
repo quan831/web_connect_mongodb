@@ -11,6 +11,7 @@ A full-stack **Next.js App Router** project using **MongoDB + Mongoose** and **s
 - **✅ Secure Authentication**:
   - JWT-based session management (HttpOnly cookies).
   - Login with **Username** or **Email**.
+  - **Google Login**: One-click sign-in using Google OAuth (integrated via shadcn/ui custom button).
   - Secure Registration with password hashing (bcryptjs).
   - Protected Routes via Middleware.
 - **✅ Dashboard Management**:
@@ -27,7 +28,7 @@ A full-stack **Next.js App Router** project using **MongoDB + Mongoose** and **s
 web_connect_mongodb/
 ├── app/
 │   ├── api/                  # API routes
-│   │   ├── auth/             # Auth routes (login, logout, register, update-account)
+│   │   ├── auth/             # Auth routes (login, google, logout, register, update-account)
 │   │   └── users/            # User CRUD routes
 │   ├── dashboard/            # Protected Dashboard
 │   │   ├── user/             # User Management Page
@@ -44,7 +45,7 @@ web_connect_mongodb/
 │   │   └── account-form.tsx  # Profile Update Form
 │   ├── ui/                   # Reusable shadcn/ui components
 │   ├── logout-button.tsx     # Logout logic
-│   ├── login-form.tsx        # Login Form
+│   ├── login-form.tsx        # Login Form (includes Google Auth)
 │   └── register-form.tsx     # Registration Form
 ├── lib/                      # Utilities
 │   ├── auth.ts               # Password hashing helpers
@@ -65,6 +66,7 @@ Create a `.env.local` file in the root directory:
 ```env
 MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>/<dbname>?retryWrites=true&w=majority
 JWT_SECRET_KEY=<your_secure_random_string>
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=<your_google_client_id>
 ```
 
 > ⚠️ **Security Note:** Never commit `.env.local` to version control.
@@ -98,6 +100,7 @@ JWT_SECRET_KEY=<your_secure_random_string>
 ### Authentication
 - Users can register a new account.
 - Login accepts either **Username** or **Email**.
+- **Google Login**: Users can sign in nicely with a Shadcn-styled Google button.
 - Sessions are maintained via secure HTTP-only cookies.
 
 ### User Management (Dashboard)
@@ -119,6 +122,7 @@ JWT_SECRET_KEY=<your_secure_random_string>
 - **ORM:** Mongoose
 - **Styling:** Tailwind CSS
 - **Components:** shadcn/ui
+- **Auth:** Custom JWT + @react-oauth/google
 - **Icons:** Lucide React
 - **Validation:** Zod (recommended for future expansion)
 
