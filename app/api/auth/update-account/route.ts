@@ -56,3 +56,40 @@ export async function PUT(req: Request) {
         return NextResponse.json({ error: error.message }, { status: 500 })
     }
 }
+
+export async function DELETE(req: Request) {
+    try {
+        const cookieStore = await cookies()
+        const token = cookieStore.get("auth_token")?.value
+
+        if (!token) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+        }
+
+        const payload = await verifyJWT(token)
+        if (!payload || !payload.userId) {
+            return NextResponse.json({ error: "Invalid token" }, { status: 401 })
+        }
+
+        await connectDB()
+        const deletedUser = await Login.findByIdAndDelete(payload.userId)
+
+        if (!deletedUser) {
+            return NextResponse.json({ error: "User not found" }, { status: 404 })
+        }
+
+        // Clear the auth cookie using NextResponse
+        const response = NextResponse.json({ message: "Account deleted successfully" })
+        response.cookies.set("auth_token", "", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 0, // Expire immediately
+            path: "/",
+        })
+
+        return response
+    } catch (error: any) {
+        return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+}

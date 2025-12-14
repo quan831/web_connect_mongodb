@@ -179,9 +179,26 @@ export default function AccountForm() {
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                                 <AlertDialogAction
                                     className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
-                                    onClick={() => {
-                                        // TODO: Implement actual delete logic
-                                        setMessage({ type: "success", text: "Account deletion simulated. (No API connected yet)" })
+                                    onClick={async () => {
+                                        setLoading(true)
+                                        try {
+                                            const res = await fetch("/api/auth/update-account", {
+                                                method: "DELETE",
+                                            })
+
+                                            if (res.ok) {
+                                                // Redirect to login (or home) which effectively logs out since cookie is cleared
+                                                router.push("/login")
+                                                router.refresh()
+                                            } else {
+                                                const data = await res.json()
+                                                setMessage({ type: "error", text: data.error || "Failed to delete account" })
+                                            }
+                                        } catch (error) {
+                                            setMessage({ type: "error", text: "Something went wrong" })
+                                        } finally {
+                                            setLoading(false)
+                                        }
                                     }}
                                 >
                                     Delete Account

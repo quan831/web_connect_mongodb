@@ -7,12 +7,22 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 export default function RegisterForm() {
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
+    const [showSuccessDialog, setShowSuccessDialog] = useState(false)
     const router = useRouter()
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -27,7 +37,7 @@ export default function RegisterForm() {
             })
 
             if (res.ok) {
-                router.push("/login")
+                setShowSuccessDialog(true)
             } else {
                 const data = await res.json()
                 setError(data.error || "Registration failed")
@@ -35,6 +45,10 @@ export default function RegisterForm() {
         } catch (err) {
             setError("An error occurred")
         }
+    }
+
+    const handleLoginRedirect = () => {
+        router.push("/login")
     }
 
     return (
@@ -98,6 +112,22 @@ export default function RegisterForm() {
                     </CardFooter>
                 </form>
             </Card>
+
+            <AlertDialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Registration Successful!</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Your account has been created successfully. You can now log in with your credentials.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogAction onClick={handleLoginRedirect}>
+                            Go to Login
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     )
 }
