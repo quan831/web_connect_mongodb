@@ -98,9 +98,9 @@ NEXT_PUBLIC_GOOGLE_CLIENT_ID=<your_google_client_id>
 ## 🛠️ Functionality Details
 
 ### Authentication
-- Users can register a new account.
+- Can register a new account.
 - Login accepts either **Username** or **Email**.
-- **Google Login**: Users can sign in nicely with a Shadcn-styled Google button.
+- **Google Login**: Can sign in nicely with a Shadcn-styled Google button.
 - Sessions are maintained via secure HTTP-only cookies.
 
 ### User Management (Dashboard)
